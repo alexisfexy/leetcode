@@ -90,11 +90,7 @@ class Knapsack(object):
                     tracker[item_index][cap] = max(include_profit, exclude_profit)
         return tracker[len(profits) - 1][capacity]
 
-    def dp_soln_tabulation_2d(self, profits: List[int], weights: List[int], capacity: int) -> int:
-        pass
-
-
 
 if __name__ == "__main__":
-    max_profit = Knapsack().dp_solution_tabulation([1, 6, 10, 16], [1, 2, 3, 5], 7)
+    max_profit = Knapsack().dp_soln_tabulation([1, 6, 10, 16], [1, 2, 3, 5], 7)
     print(max_profit)

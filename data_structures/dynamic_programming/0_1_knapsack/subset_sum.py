@@ -60,6 +60,7 @@ class SubsetSum(object):
         print(table)
         return table[len(nums)-1][desired_sum]
 
+
 if __name__ == "__main__":
     sample_false_input = [[1, 3, 4, 8], 6]
     sample_true_input = [[1, 2, 7, 1, 5], 10]

@@ -51,13 +51,22 @@ class MaxRibbonCut(object):
                 return previously_calc[current_index][remaining_len]
         return _recursive_helper(goal_length, 0)
 
-    def dp_memoization(self, ribbon_lengths: List[int], goal_length: int) -> int:
+    def dp_tabulation_soln(self, ribbon_lengths: List[int], goal_length: int) -> int:
         tracker_table = [[0 for _ in range(goal_length+1)] for _ in range(len(ribbon_lengths))]
-
-
-        pass
+        for index, curr_len in enumerate(ribbon_lengths):
+            for goal_len in range(goal_length+1):
+                if goal_len == 0:
+                    tracker_table[index][goal_len] = 0
+                else:
+                    _include_sum, _exclude_sum = -math.inf, -math.inf
+                    if curr_len <= goal_len:
+                        _include_sum = 1 + tracker_table[index][goal_len-curr_len]
+                    if index > 0:
+                        _exclude_sum = tracker_table[index-1][goal_len]
+                    tracker_table[index][goal_len] = max(_include_sum, _exclude_sum)
+        return tracker_table[len(ribbon_lengths)-1][goal_length]
 
 
 if __name__ == "__main__":
-    ans = MaxRibbonCut().dp_memoization([3,5,7], 13)
+    ans = MaxRibbonCut().dp_tabulation_soln([3,5,7], 13)
     print(ans)

@@ -1,0 +1,63 @@
+import math
+from typing import List
+
+
+class MaxRibbonCut(object):
+    """
+    We are given a ribbon of length ‘n’ and a set of possible ribbon lengths.
+    We need to cut the ribbon into the maximum number of pieces that comply with
+    the above-mentioned possible lengths.
+    Write a method that will return the count of pieces.
+
+    Example:
+    n: 5
+    Ribbon Lengths: {2,3,5}
+    Output: 2
+    Explanation: Ribbon pieces will be {2,3}.
+    """
+    def brute_force_soln(self, ribbon_lengths: List[int], goal_length: int) -> int:
+        def _recursive_helper(remaining_len: int, current_index: int):
+            if remaining_len == 0:
+                return 0
+            n_potential_lens = len(ribbon_lengths)
+            if n_potential_lens == 0 or current_index >= n_potential_lens:
+                return -math.inf
+            else:
+                curr_len = ribbon_lengths[current_index]
+                _include_pieces = -math.inf
+                if curr_len <= remaining_len:
+                    _include_pieces = 1 + _recursive_helper(remaining_len-curr_len, current_index)
+                _exclude_pieces = _recursive_helper(remaining_len, current_index+1)
+                return max(_include_pieces, _exclude_pieces)
+        return _recursive_helper(goal_length, 0)
+
+    def dp_memoization(self, ribbon_lengths: List[int], goal_length: int) -> int:
+        previously_calc = [[-1 for _ in range(goal_length+1)] for _ in range(len(ribbon_lengths))]
+        def _recursive_helper(remaining_len: int, current_index: int):
+            if remaining_len == 0:
+                return 0
+            n_potential_lens = len(ribbon_lengths)
+            if n_potential_lens == 0 or current_index >= n_potential_lens:
+                return -math.inf
+            else:
+                if previously_calc[current_index][remaining_len] != -1:
+                    return previously_calc[current_index][remaining_len]
+                curr_len = ribbon_lengths[current_index]
+                _include_pieces = -math.inf
+                if curr_len <= remaining_len:
+                    _include_pieces = 1 + _recursive_helper(remaining_len - curr_len, current_index)
+                _exclude_pieces = _recursive_helper(remaining_len, current_index + 1)
+                previously_calc[current_index][remaining_len] = max(_include_pieces, _exclude_pieces)
+                return previously_calc[current_index][remaining_len]
+        return _recursive_helper(goal_length, 0)
+
+    def dp_memoization(self, ribbon_lengths: List[int], goal_length: int) -> int:
+        tracker_table = [[0 for _ in range(goal_length+1)] for _ in range(len(ribbon_lengths))]
+
+
+        pass
+
+
+if __name__ == "__main__":
+    ans = MaxRibbonCut().dp_memoization([3,5,7], 13)
+    print(ans)

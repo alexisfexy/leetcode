@@ -49,7 +49,7 @@ class FibNumbers(object):
         num_1 = 0
         num_2 = 1
         sum_holder = None
-        for num in range(2, n+1):
+        for _ in range(2, n+1):
             sum_holder = num_1 + num_2
             num_1 = num_2
             num_2 = sum_holder

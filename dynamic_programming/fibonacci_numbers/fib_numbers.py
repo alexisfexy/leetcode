@@ -48,7 +48,6 @@ class FibNumbers(object):
             return n
         num_1 = 0
         num_2 = 1
-        sum_holder = None
         for _ in range(2, n+1):
             sum_holder = num_1 + num_2
             num_1 = num_2
